@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mapper namespace="com.zhizhen.test.springboot_mybatis.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.zhizhen.test.springboot_mybatis.model.User">
+        <resultMap id="BaseResultMap" type="com.example.entity.User">
+            <result column="username" jdbcType="VARCHAR" property="username" />
+            <result column="password" jdbcType="VARCHAR" property="password" />
+        </resultMap>
+    </resultMap>
+
+<!--    <select id="sel" resultType="com.zhizhen.test.springboot_mybatis.model.User">-->
+<!--        select * from user where username = #{username}-->
+<!--    </select>-->
+</mapper>
