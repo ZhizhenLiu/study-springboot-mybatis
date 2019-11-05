@@ -1,6 +1,6 @@
-#springboot 学习入门
+# springboot 学习入门
 
-##心得整理：
+## 心得整理：
    1.Service层使用 @Autowired 自动装配userMapper时会有报错;
    原因:userMapper使用了@Mapper注解，idea不能把@Mapper注解的TuserMapper识别为Bean
    解决办法：Mapper类增加@repository注解，标注该类为DAO组件。并且在spring 启动application中增加注解@MapperScan("com.zhizhen.test.springboot_mybatis.mapper")
