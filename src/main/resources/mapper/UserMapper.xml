@@ -1,13 +1,26 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<mapper namespace="com.zhizhen.test.springboot_mybatis.mapper.UserMapper">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 一定要对应自己dao包所在的包路径，对应我们需要匹配的dao层类-->
+<mapper namespace="com.zhizhen.test.springboot_mybatis.mapper.UserMapper2">
+<!--type 一定要对应我们需要匹配的实体类-->
     <resultMap id="BaseResultMap" type="com.zhizhen.test.springboot_mybatis.model.User">
-        <resultMap id="BaseResultMap" type="com.example.entity.User">
-            <result column="username" jdbcType="VARCHAR" property="username" />
-            <result column="password" jdbcType="VARCHAR" property="password" />
-        </resultMap>
+        <id column="username" property="username" jdbcType="VARCHAR"/>
+        <id column="password" property="password" jdbcType="VARCHAR"/>
     </resultMap>
 
-<!--    <select id="sel" resultType="com.zhizhen.test.springboot_mybatis.model.User">-->
-<!--        select * from user where username = #{username}-->
-<!--    </select>-->
+    <sql id = "Col">
+        username,password
+    </sql>
+<!--id=“select” 一定要与dao层需要匹配的方法名一致，resultMap 表示对应的返回值类型-->
+    <select id="select" resultMap="BaseResultMap">
+        select
+        <include refid = "Col"/>
+        from user
+    </select>
+
+    <insert id="insert" parameterType = "com.zhizhen.test.springboot_mybatis.model.User">
+        insert into user
+        values( #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR} )
+    </insert>
 </mapper>
+
