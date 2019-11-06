@@ -2,15 +2,8 @@ package com.zhizhen.test.springboot_mybatis.model;
 
 public class User {
     private String username;
-    private String password;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+    private String password;
 
     public User(String username, String password) {
         this.username = username;
@@ -22,7 +15,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username == null ? null : username.trim();
     }
 
     public String getPassword() {
@@ -30,6 +23,6 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 }

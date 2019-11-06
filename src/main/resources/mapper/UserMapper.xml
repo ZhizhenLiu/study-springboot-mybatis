@@ -1,26 +1,65 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--namespace 一定要对应自己dao包所在的包路径，对应我们需要匹配的dao层类-->
-<mapper namespace="com.zhizhen.test.springboot_mybatis.mapper.UserMapper2">
-<!--type 一定要对应我们需要匹配的实体类-->
-    <resultMap id="BaseResultMap" type="com.zhizhen.test.springboot_mybatis.model.User">
-        <id column="username" property="username" jdbcType="VARCHAR"/>
-        <id column="password" property="password" jdbcType="VARCHAR"/>
-    </resultMap>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhizhen.test.springboot_mybatis.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zhizhen.test.springboot_mybatis.model.User" >
+    <id column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    username, password
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
 
-    <sql id = "Col">
-        username,password
-    </sql>
-<!--id=“select” 一定要与dao层需要匹配的方法名一致，resultMap 表示对应的返回值类型-->
-    <select id="select" resultMap="BaseResultMap">
-        select
-        <include refid = "Col"/>
-        from user
-    </select>
+  <select id="sjelectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from user;
+  </select>
 
-    <insert id="insert" parameterType = "com.zhizhen.test.springboot_mybatis.model.User">
-        insert into user
-        values( #{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR} )
-    </insert>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where username = #{username,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zhizhen.test.springboot_mybatis.model.User" >
+    insert into user (username, password)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhizhen.test.springboot_mybatis.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhizhen.test.springboot_mybatis.model.User" >
+    update user
+    <set >
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhizhen.test.springboot_mybatis.model.User" >
+    update user
+    set password = #{password,jdbcType=VARCHAR}
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
 </mapper>
-
